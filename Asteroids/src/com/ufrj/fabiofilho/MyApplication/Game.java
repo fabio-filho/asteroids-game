@@ -12,7 +12,7 @@ import java.util.Set;
  */
 public class Game implements Jogo {
 
-
+    private static final String GAME_NAME = "Asteroids";
     public static final int SCREEN_WIDTH = 800;
     public static final int SCREEN_HEIGHT = 480;
 
@@ -22,13 +22,22 @@ public class Game implements Jogo {
 
 
     public Game(){
-
+        //Generate some random asteroids.
         mAsteroids = Asteroid.generate(InitialAsteroidAmount);
     }
 
+    public static int[] getScreenCenter(){
+
+        return new int[]{
+            SCREEN_WIDTH/2,
+            SCREEN_HEIGHT/2
+        };
+    }
+
+
     @Override
     public String getTitulo() {
-        return "Asteroide";
+        return GAME_NAME;
     }
 
     @Override
@@ -64,9 +73,6 @@ public class Game implements Jogo {
                     mAsteroid.getSize(),
                     mAsteroid.getColor()
             );
-
-
-        //Utilities.sleep(500);
 
     }
 

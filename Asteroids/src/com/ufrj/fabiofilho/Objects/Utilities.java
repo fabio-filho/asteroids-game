@@ -5,16 +5,6 @@ package com.ufrj.fabiofilho.Objects;
  */
 public class Utilities {
 
-    public static void sleep(int mTimer){
-
-        try {
-            Thread.sleep(mTimer);
-
-        }catch (Exception o){
-            Utilities.log(o.toString());
-        }
-    }
-
 
     public static String log(String mMessage){
 

@@ -15,7 +15,6 @@ public class Asteroid {
 
     public final static int SMALL = 1, MEDIUM = 2, BIG = 3, GIANT = 4;
 
-
     private static final int BASE_SIZE = 10;
 
     private int mSize;
@@ -63,22 +62,20 @@ public class Asteroid {
     }
 
 
+    /* Proprieties */
+
     public Cor getColor(){ return mColor; }
 
 
-    public void setX(int mX){ this.mX = mX; }
+    private void setX(int mX){ this.mX = mX; }
 
     public double getX(){ return mX; }
 
 
     public double getY(){ return mY; }
 
-    public void setY(int mY){ this.mY = mY; }
+    private void setY(int mY){ this.mY = mY; }
 
-
-    public double getSpeedX(){ return mSpeedX; }
-
-    public double getSpeedY(){ return mSpeedY; }
 
     public double[] getCenter() throws IllegalArgumentException {
 
@@ -89,13 +86,18 @@ public class Asteroid {
     }
 
 
+    /* End of Proprieties */
+
+
+
+
+    /* Game logic methods */
+
+
     private void setInitialRandomVelocity(){
 
-        while (mSpeedX == 0 || mSpeedY == 0) {
-            mSpeedX = new Random().nextInt(GIANT * 2 - mSize) * BASE_SIZE;
-            mSpeedY = new Random().nextInt(GIANT * 2 - mSize) * BASE_SIZE;
-        }
-
+        mSpeedX = new Random().nextInt(GIANT * 2 - mSize) * BASE_SIZE + 1;
+        mSpeedY = new Random().nextInt(GIANT * 2 - mSize) * BASE_SIZE + 1;
     }
 
 
@@ -113,6 +115,10 @@ public class Asteroid {
             mY = -getSize()/2;
 
     }
+
+
+    /* End of Game logic methods */
+
 
 
 
@@ -150,6 +156,6 @@ public class Asteroid {
         return mList;
     }
 
-    /* End Static methods */
+    /* End of Static methods */
 
 }
