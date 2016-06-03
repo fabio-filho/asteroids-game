@@ -1,6 +1,7 @@
 package com.ufrj.fabiofilho.MyApplication;
 
-import com.ufrj.fabiofilho.MyApplication.Asteroid.Asteroid;
+import com.ufrj.fabiofilho.MyApplication.InteractiveObject.Asteroid.Asteroid;
+import com.ufrj.fabiofilho.MyApplication.InteractiveObject.Player.Nave;
 import com.ufrj.fabiofilho.lib.Jogo;
 import com.ufrj.fabiofilho.lib.Tela;
 
@@ -12,18 +13,27 @@ import java.util.Set;
  */
 public class Game implements Jogo {
 
+    /* Game attributes */
     private static final String GAME_NAME = "Asteroids";
     public static final int SCREEN_WIDTH = 800;
     public static final int SCREEN_HEIGHT = 480;
+    /* End of Game attributes */
 
+
+    /* Interactive objects */
     private final int InitialAsteroidAmount = 6;
     private List<Asteroid> mAsteroids;
+    private Nave mNave;
 
 
 
     public Game(){
+
         //Generate some random asteroids.
         mAsteroids = Asteroid.generate(InitialAsteroidAmount);
+
+        //Instance nave object.
+        mNave = new Nave();
     }
 
     public static int[] getScreenCenter(){
@@ -55,25 +65,22 @@ public class Game implements Jogo {
 
         //Update position of each Asteroid's instance.
         for(int mIndex = 0; mIndex < mAsteroids.size(); mIndex++) {
-            mAsteroids.get(mIndex).update(mDeltaTime);
+            mAsteroids.get(mIndex).update(mKeys, mDeltaTime);
         }
 
 
+        mNave.update(mKeys, mDeltaTime);
     }
 
     @Override
     public void desenhar(Tela mSurface) {
 
-
-        //Update position of each Asteroid's instance.
+        //Draw asteroids.
         for(Asteroid mAsteroid: mAsteroids)
-            mSurface.circulo(
-                    mAsteroid.getX(),
-                    mAsteroid.getY(),
-                    mAsteroid.getSize(),
-                    mAsteroid.getColor()
-            );
+            mAsteroid.draw(mSurface);
 
+        //Draw nave.
+        mNave.draw(mSurface);
     }
 
     @Override

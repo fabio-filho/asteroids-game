@@ -1,17 +1,19 @@
-package com.ufrj.fabiofilho.MyApplication.Asteroid;
+package com.ufrj.fabiofilho.MyApplication.InteractiveObject.Asteroid;
 
 import com.ufrj.fabiofilho.MyApplication.Game;
-import com.ufrj.fabiofilho.Objects.Utilities;
+import com.ufrj.fabiofilho.MyApplication.InteractiveObject.InteractiveObject;
 import com.ufrj.fabiofilho.lib.Cor;
+import com.ufrj.fabiofilho.lib.Tela;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 /**
  * Created by fabiofilho on 6/1/16.
  */
-public class Asteroid {
+public class Asteroid implements InteractiveObject{
 
     public final static int SMALL = 1, MEDIUM = 2, BIG = 3, GIANT = 4;
 
@@ -24,9 +26,9 @@ public class Asteroid {
             Cor.AMARELO,
             Cor.AZUL,
             Cor.VERDE,
-            Cor.VERMELHO,
-            Cor.BRANCO
+            Cor.VERMELHO
     };
+
     private Cor mColor;
 
     public Asteroid(int mSize, Cor mColor){
@@ -64,26 +66,9 @@ public class Asteroid {
 
     /* Proprieties */
 
-    public Cor getColor(){ return mColor; }
-
-
     private void setX(int mX){ this.mX = mX; }
 
-    public double getX(){ return mX; }
-
-
-    public double getY(){ return mY; }
-
     private void setY(int mY){ this.mY = mY; }
-
-
-    public double[] getCenter() throws IllegalArgumentException {
-
-        return new double[]{
-                getX() + getSize()/2,
-                getY() + getSize()/2
-        };
-    }
 
 
     /* End of Proprieties */
@@ -96,14 +81,13 @@ public class Asteroid {
 
     private void setInitialRandomVelocity(){
 
-        mSpeedX = new Random().nextInt(GIANT * 2 - mSize) * BASE_SIZE + 1;
-        mSpeedY = new Random().nextInt(GIANT * 2 - mSize) * BASE_SIZE + 1;
+        mSpeedX = new Random().nextInt(GIANT * 2 - mSize) * BASE_SIZE + 5;
+        mSpeedY = new Random().nextInt(GIANT * 2 - mSize) * BASE_SIZE + 5;
     }
 
+    @Override
+    public void update(Set<String> mKeys, double mDeltaTime){
 
-    public void update(double mDeltaTime){
-
-        //Utilities.log("dt: "+mDeltaTime+ " - x:"+mX+ " - y:"+mY+ " - speedX:"+mSpeedX+ " - speedY:"+mSpeedY);
         mX += mSpeedX * mDeltaTime;
         mY += mSpeedY * mDeltaTime;
 
@@ -114,6 +98,12 @@ public class Asteroid {
         if(mY > Game.SCREEN_HEIGHT)
             mY = -getSize()/2;
 
+    }
+
+    @Override
+    public void draw(Tela mSurface){
+
+        mSurface.circulo( mX, mY, getSize(), mColor);
     }
 
 
@@ -149,7 +139,6 @@ public class Asteroid {
             }
 
         }catch (IllegalArgumentException mException){
-            Utilities.log(mException.toString());
             mException.printStackTrace();
         }
 
